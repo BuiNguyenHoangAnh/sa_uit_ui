@@ -49,6 +49,9 @@ public class sample extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+		
 		String inputText = request.getParameter("input");
 		System.out.println("input servlet: " + inputText);
 		
@@ -57,18 +60,18 @@ public class sample extends HttpServlet {
 			
 		String temp = null;
 		
-//		temp = standardizer.standardizeData(this.spark, inputText);
-//		
-//		temp = wordSegmentation.wordSegmentation(this.spark, temp);
-//		
-//		try {
-//			  temp = removeStopWords.correctString(this.spark, temp); 
-//		} catch (IOException e) { 
-//			e.printStackTrace();
-//		}
+		temp = standardizer.standardizeData(this.spark, inputText);
+		
+		temp = wordSegmentation.wordSegmentation(this.spark, temp);
+		
+		try {
+			  temp = removeStopWords.correctString(this.spark, temp); 
+		} catch (IOException e) { 
+			e.printStackTrace();
+		}
 		
 		model = new sentimentAnalyser();
-		double[] result = model.testSample(inputText);
+		double[] result = model.testSample(temp);
 		
 		PrintWriter out = response.getWriter();
 		out.println(
@@ -77,34 +80,34 @@ public class sample extends HttpServlet {
 				"<body>"+
 					"<br>"+
 					"<div>"+
-						"<span>Aspect</span>"+
+						"<span>Khía cạnh</span>"+
 						"<br>"+
-						"<span>Training:</span>"+
+						"<span>Đào tạo:</span>"+
 						"<span>"+
 							result[0]+
 						"</span>"+
 						"<br>"+
-						"<span>Facility:</span>"+
+						"<span>Cơ sở vật chất:</span>"+
 						"<span>"+
 							result[1]+
 						"</span>"+
 					"</div>"+
 					"<br>"+
 					"<div>"+
-						"<span>Sentiment</span>"+
+						"<span>Cảm xúc</span>"+
 						"<br>"+
-						"<span>Positive:</span>"+
+						"<span>Tích cực:</span>"+
 						"<span>"+
 							result[2]+
 						"</span>"+
 						"<br>"+
-						"<span>Negative:</span>"+
+						"<span>Tiêu cực:</span>"+
 						"<span>"+
 							result[3]+
 						"</span>"+
 					"</div>"+
 					"<div>"+
-						"<a href=\"sample.jsp\">Reset</a>"+
+						"<a href=\"sample.jsp\">Nhập lại</a>"+
 					"</div>"+
 				"</body>"+
 				"</html>");
