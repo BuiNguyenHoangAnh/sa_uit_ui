@@ -19,14 +19,7 @@
 	
 		<div class="statistics">
 			<div class="control">
-				<form method="post" action="statistic">
-					<span> Nguồn</span>
-					<select class="options" name="options">
-						<option type="radio" value="all">Tất cả</option>
-		  				<option type="radio" value="fanpage">Fanpage Tư vấn tuyển sinh UIT</option>
-						<option type="radio" value="forum">Forum UIT</option>
-					</select>
-					
+				<form method="post" action="statistic">					
 					<span>Hiển thị: </span>
 					<select class="filter" name="filter">
 		  				<option type="radio" value="month" title="Hiển thị kết quả trong vòng 6 tháng gần nhất"> Tháng</option>
@@ -45,146 +38,59 @@
 		</div>
 
 		<div id="tab1" class="tabcontent">
-			<h3>Biểu đồ thống kê lượng đề cập</h3>
-			<canvas  id="columnchart" class="chart"></canvas >
-			<h3>Biểu đồ phân tích cảm xúc</h3>
- 				<canvas id="linechart" class="chart"></canvas>
-			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+			<h3>Biểu đồ thống kê cảm xúc</h3>
+			<canvas  id="chart" class="chart"></canvas >
 
 			<script type="text/javascript">
-				var ctx = document.getElementById("columnchart").getContext('2d');
-				var myChart = new Chart(ctx, {
-					type: 'bar',
-					data: {
-						labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Otc", "Nov", "Dec"],
-						datasets: [{
-							label: 'Đề cập',
-							data: [120, 300, 50, 70, 10, 220, 75, 102, 33, 56, 99, 330],	
-							backgroundColor: [
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)'
-							],
-							borderColor: [
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)'
-							],
-							borderWidth: 1
-						}]
-					},
-					options: {
-						scales: {
-							yAxes: [{
-								ticks: {
-									beginAtZero: true
-								}
-							}]
-						}
-					}
-				});
-			</script>
-
-			<script type="text/javascript">
-				var ctx = document.getElementById("linechart").getContext('2d');
-				var myChart = new Chart(ctx, {
-					type: 'line',
-					data: {
-						labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Otc", "Nov", "Dec"],
-						datasets: [{
-							label: 'Tiêu cực',
-							data: [120, 300, 50, 70, 10, 220, 75, 102, 33, 56, 99, 330],	
-							backgroundColor: [
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(75, 192, 192, 0.2)'
-							],
-							borderColor: [
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)',
-								'rgba(75, 192, 192, 1)'
-							],
-							borderWidth: 1
-						},
-						{
-							label: 'Tích cực',
-							data: [250, 720, 100, 150, 6, 5, 105, 85, 55, 46, 190, 320],	
-							backgroundColor: [
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(255, 99, 132, 0.2)'
-							],
-							borderColor: [
-								'rgba(255, 99, 132, 1)',
-								'rgba(255, 99, 132, 1)',
-								'rgba(255, 99, 132, 1)',
-								'rgba(255, 99, 132, 1)',
-								'rgba(255, 99, 132, 1)',
-								'rgba(255, 99, 132, 1)',
-								'rgba(255, 99, 132, 1)',
-								'rgba(255, 99, 132, 1)',
-								'rgba(255, 99, 132, 1)',
-								'rgba(255, 99, 132, 1)',
-								'rgba(255, 99, 132, 1)',
-								'rgba(255, 99, 132, 1)'
-							],
-							borderWidth: 1
-						}]
-					},
-					options: {
-						scales: {
-							yAxes: [{
-								ticks: {
-									beginAtZero: true
-								}
-							}]
-						}
-					}
+				Chart.defaults.global.elements.line.fill = false;
+				var barChartData = {
+			  		labels: ['2016', '2017', '2018', '2019'],
+			  		datasets: [{
+				    	type: 'bar',
+					    label: 'Tiêu cực',
+					    yAxisID: "y-axis-0",
+					    backgroundColor: "rgba(217,83,79,0.75)",
+					    data: [1000, 2000, 4000, 5000]
+			  		}, {
+					    type: 'bar',
+					    label: 'Tích cực',
+					    yAxisID: "y-axis-0",
+					    backgroundColor: "rgba(92,184,92,0.75)",
+					    data: [500, 600, 700, 800]
+				  	}, {
+					    type: 'line',
+					    label: 'Số lượng đề cập',
+					    yAxisID: "y-axis-0",
+					    backgroundColor: "rgba(151,187,205,1)",
+					    data: [1500, 2600, 4700, 5800]
+				  	}]
+				};
+	
+	
+				var ctx = document.getElementById("chart").getContext("2d");
+				var ch = new Chart(ctx, {
+			  		type: 'bar',
+			  		data: barChartData,
+			  		options: {
+			    		title: {
+				      		display: true,
+				      		text: "Biểu đồ thống kê cảm xúc"
+				    	},
+				    	tooltips: {
+				      		mode: 'label'
+				    	},
+				    	responsive: true,
+				    	scales: {
+				      		xAxes: [{
+				        		stacked: true
+				      		}],
+				      		yAxes: [{
+				        		stacked: true,
+				        		position: "left",
+				        		id: "y-axis-0",
+				      		}]
+				    	}
+				  	}
 				});
 			</script>
 		</div>
