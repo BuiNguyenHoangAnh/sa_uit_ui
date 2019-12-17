@@ -85,8 +85,8 @@ public class connectDatabase {
 		this.connectDB();
 		
 		for (int i = 0; i <= day-1; i++) {
-			last = this.date.minus(i+1, ChronoUnit.DAYS);
-			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "neg"), Filters.eq("time", last.toString()));
+			last = this.date.minus(i, ChronoUnit.DAYS);
+			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "neg"), Filters.lte("time", last.toString()), Filters.gte("time", last.minus(1, ChronoUnit.DAYS).toString()));
 			
 			count[i] = this.getData(bson, this.col);
 		}
@@ -102,8 +102,8 @@ public class connectDatabase {
 		this.connectDB();
 		
 		for (int i = 0; i <= month-1; i++) {
-			last = this.date.minus(i+1, ChronoUnit.MONTHS);
-			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "neg"), Filters.eq("time", last.toString()));
+			last = this.date.minus(i, ChronoUnit.MONTHS);
+			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "neg"), Filters.lte("time", last.toString()), Filters.gte("time", last.minus(1, ChronoUnit.MONTHS).toString()));
 			
 			count[i] = this.getData(bson, this.col);
 		}
@@ -119,8 +119,8 @@ public class connectDatabase {
 		this.connectDB();
 		
 		for (int i = 0; i <= hour-1; i++) {
-			last = this.date.minus(i+1, ChronoUnit.HOURS);
-			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "neg"), Filters.eq("time", last.toString()));
+			last = this.date.minus(i, ChronoUnit.HOURS);
+			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "neg"), Filters.lte("time", last.toString()), Filters.gte("time", last.minus(1, ChronoUnit.HOURS).toString()));
 			
 			count[i] = this.getData(bson, this.col);
 		}
@@ -137,8 +137,8 @@ public class connectDatabase {
 		this.connectDB();
 		
 		for (int i = 0; i <= day-1; i++) {
-			last = this.date.minus(i+1, ChronoUnit.DAYS);
-			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "pos"), Filters.eq("time", last.toString()));
+			last = this.date.minus(i, ChronoUnit.DAYS);
+			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "pos"), Filters.lte("time", last.toString()), Filters.gte("time", last.minus(1, ChronoUnit.DAYS).toString()));
 			
 			count[i] = this.getData(bson, this.col);
 		}
@@ -154,8 +154,8 @@ public class connectDatabase {
 		this.connectDB();
 		
 		for (int i = 0; i <= month-1; i++) {
-			last = this.date.minus(i+1, ChronoUnit.MONTHS);
-			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "pos"), Filters.eq("time", last.toString()));
+			last = this.date.minus(i, ChronoUnit.MONTHS);
+			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "pos"), Filters.lte("time", last.toString()), Filters.gte("time", last.minus(1, ChronoUnit.MONTHS).toString()));
 			
 			count[i] = this.getData(bson, this.col);
 		}
@@ -171,8 +171,8 @@ public class connectDatabase {
 		this.connectDB();
 		
 		for (int i = 0; i <= hour-1; i++) {
-			last = this.date.minus(i+1, ChronoUnit.HOURS);
-			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "pos"), Filters.eq("time", last.toString()));
+			last = this.date.minus(i, ChronoUnit.HOURS);
+			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "pos"), Filters.lte("time", last.toString()), Filters.gte("time", last.minus(1, ChronoUnit.HOURS).toString()));
 			
 			count[i] = this.getData(bson, this.col);
 		}
@@ -192,8 +192,8 @@ public class connectDatabase {
 		this.connectDB();
 		
 		for (int i = 0; i <= day-1; i++) {
-			last = this.date.minus(i+1, ChronoUnit.DAYS);
-			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "neg"), Filters.eq("time", last.toString()));
+			last = this.date.minus(i, ChronoUnit.DAYS);
+			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "neg"), Filters.lte("time", last.toString()), Filters.gte("time", last.minus(1, ChronoUnit.DAYS).toString()));
 			
 			count[i] = this.getData(bson, this.col);
 		}
@@ -209,8 +209,8 @@ public class connectDatabase {
 		this.connectDB();
 		
 		for (int i = 0; i <= month-1; i++) {
-			last = this.date.minus(i+1, ChronoUnit.MONTHS);
-			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "neg"), Filters.eq("time", last.toString()));
+			last = this.date.minus(i, ChronoUnit.MONTHS);
+			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "neg"), Filters.lte("time", last.toString()), Filters.gte("time", last.minus(1, ChronoUnit.MONTHS).toString()));
 			
 			count[i] = this.getData(bson, this.col);
 		}
@@ -226,8 +226,8 @@ public class connectDatabase {
 		this.connectDB();
 		
 		for (int i = 0; i <= hour-1; i++) {
-			last = this.date.minus(i+1, ChronoUnit.HOURS);
-			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "neg"), Filters.eq("time", last.toString()));
+			last = this.date.minus(i, ChronoUnit.HOURS);
+			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "neg"), Filters.lte("time", last.toString()), Filters.gte("time", last.minus(1, ChronoUnit.HOURS).toString()));
 			
 			count[i] = this.getData(bson, this.col);
 		}
@@ -244,8 +244,8 @@ public class connectDatabase {
 		this.connectDB();
 		
 		for (int i = 0; i <= day-1; i++) {
-			last = this.date.minus(i+1, ChronoUnit.DAYS);
-			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "pos"), Filters.eq("time", last.toString()));
+			last = this.date.minus(i, ChronoUnit.DAYS);
+			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "pos"), Filters.lte("time", last.toString()), Filters.gte("time", last.minus(1, ChronoUnit.DAYS).toString()));
 			
 			count[i] = this.getData(bson, this.col);
 		}
@@ -261,8 +261,8 @@ public class connectDatabase {
 		this.connectDB();
 		
 		for (int i = 0; i <= month-1; i++) {
-			last = this.date.minus(i+1, ChronoUnit.MONTHS);
-			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "pos"), Filters.eq("time", last.toString()));
+			last = this.date.minus(i, ChronoUnit.MONTHS);
+			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "pos"), Filters.lte("time", last.toString()), Filters.gte("time", last.minus(1, ChronoUnit.MONTHS).toString()));
 			
 			count[i] = this.getData(bson, this.col);
 		}
@@ -278,8 +278,8 @@ public class connectDatabase {
 		this.connectDB();
 		
 		for (int i = 0; i <= hour-1; i++) {
-			last = this.date.minus(i+1, ChronoUnit.HOURS);
-			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "pos"), Filters.eq("time", last.toString()));
+			last = this.date.minus(i, ChronoUnit.HOURS);
+			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "pos"), Filters.lte("time", last.toString()), Filters.gte("time", last.minus(1, ChronoUnit.HOURS).toString()));
 			
 			count[i] = this.getData(bson, this.col);
 		}
