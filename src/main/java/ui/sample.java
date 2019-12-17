@@ -62,18 +62,18 @@ public class sample extends HttpServlet {
 			
 		String temp = null;
 		
-//		temp = standardizer.standardizeData(this.spark, inputText);
-//		
-//		temp = wordSegmentation.wordSegmentation(this.spark, temp);
-//		
-//		try {
-//			  temp = removeStopWords.correctString(this.spark, temp); 
-//		} catch (IOException e) { 
-//			e.printStackTrace();
-//		}
+		temp = standardizer.standardizeData(this.spark, inputText);
+		
+		temp = wordSegmentation.wordSegmentation(this.spark, temp);
+		
+		try {
+			  temp = removeStopWords.correctString(this.spark, temp); 
+		} catch (IOException e) { 
+			e.printStackTrace();
+		}
 		
 		model = new sentimentAnalyser();
-		double[] result = model.testSample(inputText);
+		double[] result = model.testSample(temp);
 		
 		out.println(
 				"<!DOCTYPE html>"+
