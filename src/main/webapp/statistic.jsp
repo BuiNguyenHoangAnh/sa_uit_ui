@@ -72,30 +72,26 @@
 			  		type: 'bar',
 			  		data: barChartData,
 			  		options: {
-			    		title: {
-				      		display: true,
-				      		text: "Biểu đồ thống kê cảm xúc"
-				    	},
-				    	tooltips: {
-				      		mode: 'label'
-				    	},
-				    	responsive: true,
-				    	scales: {
-				      		xAxes: [{
-				        		stacked: true
-				      		}],
-				      		yAxes: [{
-				        		stacked: true,
-				        		position: "left",
-				        		id: "y-axis-0",
-				      		}]
-				    	}
+						tooltips: {
+							mode: 'label'
+						},
+						responsive: true,
+						scales: {
+							xAxes: [{
+								stacked: true
+							}],
+							yAxes: [{
+								stacked: true,
+								position: "left",
+								id: "y-axis-0",
+							}]
+						}
 				  	}
 				});
 			</script>
 		</div>
 		
-		<div class="demo-link">
+		<div class="demo-link" style="font-size: 20px; margin-top: 16px;">
 			<a href="sample.jsp">Demo phân tích cảm xúc</a>
 		</div>
 	</div>
