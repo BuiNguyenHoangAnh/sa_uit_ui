@@ -2,20 +2,21 @@ package util;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.Iterator;
 
 import org.bson.conversions.Bson;
 
-import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
-import com.mongodb.QueryBuilder;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
 public class connectDatabase {
+	
+	static int day = 7;
+	static int month = 12;
+	static int hour = 24;
 	
 	int port_no = 27017;
 	String url = "127.0.0.1";
@@ -75,130 +76,214 @@ public class connectDatabase {
 	/*
 	 * Training
 	 */
- 	public int countNegTrainingPerDay() {	
+ 	public int[] countNegTrainingPerDay() {	
 		this.date = this.getNow();
-		Instant last = this.getLastWeekDate();
+		Instant last;
 		
-		Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "neg"), Filters.lte("time", this.date.toString()), Filters.gte("time", last.toString()));
+		int[] count = new int[day];
 		
 		this.connectDB();
+		
+		for (int i = 0; i <= day-1; i++) {
+			last = this.date.minus(i+1, ChronoUnit.DAYS);
+			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "neg"), Filters.eq("time", last.toString()));
+			
+			count[i] = this.getData(bson, this.col);
+		}
 
-		return this.getData(bson, this.col);
+		return count;
 	}
-	public int countNegTrainingPerMonth() {
+	public int[] countNegTrainingPerMonth() {
 		this.date = this.getNow();
-		Instant last = this.getLastYearDate();
+		Instant last;
 		
-		Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "neg"), Filters.lte("time", this.date.toString()), Filters.gte("time", last.toString()));
+		int[] count = new int[month];
 		
 		this.connectDB();
 		
-		return this.getData(bson, this.col);
+		for (int i = 0; i <= month-1; i++) {
+			last = this.date.minus(i+1, ChronoUnit.MONTHS);
+			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "neg"), Filters.eq("time", last.toString()));
+			
+			count[i] = this.getData(bson, this.col);
+		}
+
+		return count;
 	}
-	public int countNegTrainingPerHour() {
+	public int[] countNegTrainingPerHour() {
 		this.date = this.getNow();
-		Instant yesterday = this.getYesterdayDate();
+		Instant last;
 		
-		Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "neg"), Filters.lte("time", this.date.toString()), Filters.gte("time", yesterday.toString()));
+		int[] count = new int[hour];
 		
 		this.connectDB();
 		
-		return this.getData(bson, this.col);
+		for (int i = 0; i <= hour-1; i++) {
+			last = this.date.minus(i+1, ChronoUnit.HOURS);
+			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "neg"), Filters.eq("time", last.toString()));
+			
+			count[i] = this.getData(bson, this.col);
+		}
+
+		return count;
 	}
 	
-	public int countPosTrainingPerDay() {		
+	public int[] countPosTrainingPerDay() {		
 		this.date = this.getNow();
-		Instant last = this.getLastWeekDate();
+		Instant last;
 		
-		Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "pos"), Filters.lte("time", this.date.toString()), Filters.gte("time", last.toString()));
+		int[] count = new int[day];
 		
 		this.connectDB();
+		
+		for (int i = 0; i <= day-1; i++) {
+			last = this.date.minus(i+1, ChronoUnit.DAYS);
+			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "pos"), Filters.eq("time", last.toString()));
+			
+			count[i] = this.getData(bson, this.col);
+		}
 
-		return this.getData(bson, this.col);
+		return count;
 	}
-	public int countPosTrainingPerMonth() {
+	public int[] countPosTrainingPerMonth() {
 		this.date = this.getNow();
-		Instant last = this.getLastYearDate();
-	
-		Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "pos"), Filters.lte("time", this.date.toString()), Filters.gte("time", last.toString()));
+		Instant last;
+		
+		int[] count = new int[month];
 		
 		this.connectDB();
 		
-		return this.getData(bson, this.col);
+		for (int i = 0; i <= month-1; i++) {
+			last = this.date.minus(i+1, ChronoUnit.MONTHS);
+			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "pos"), Filters.eq("time", last.toString()));
+			
+			count[i] = this.getData(bson, this.col);
+		}
+
+		return count;
 	}
-	public int countPosTrainingPerHour() {
+	public int[] countPosTrainingPerHour() {
 		this.date = this.getNow();
-		Instant yesterday = this.getYesterdayDate();
+		Instant last;
 		
-		Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "pos"), Filters.lte("time", this.date.toString()), Filters.gte("time", yesterday.toString()));
+		int[] count = new int[hour];
 		
 		this.connectDB();
 		
-		return this.getData(bson, this.col);
+		for (int i = 0; i <= hour-1; i++) {
+			last = this.date.minus(i+1, ChronoUnit.HOURS);
+			Bson bson = Filters.and(Filters.eq("aspect", "dt"), Filters.eq("sentiment", "pos"), Filters.eq("time", last.toString()));
+			
+			count[i] = this.getData(bson, this.col);
+		}
+
+		return count;
 	}
 	
 	/*
 	 * Facility
 	 */
-	public int countNegFacilityPerDay() {		
+	public int[] countNegFacilityPerDay() {		
 		this.date = this.getNow();
-		Instant last = this.getLastWeekDate();
+		Instant last;
 		
-		Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "neg"), Filters.lte("time", this.date.toString()), Filters.gte("time", last.toString()));
+		int[] count = new int[day];
 		
 		this.connectDB();
+		
+		for (int i = 0; i <= day-1; i++) {
+			last = this.date.minus(i+1, ChronoUnit.DAYS);
+			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "neg"), Filters.eq("time", last.toString()));
+			
+			count[i] = this.getData(bson, this.col);
+		}
 
-		return this.getData(bson, this.col);
+		return count;
 	}
-	public int countNegFacilityPerMonth() {
+	public int[] countNegFacilityPerMonth() {
 		this.date = this.getNow();
-		Instant last = this.getLastYearDate();
+		Instant last;
 		
-		Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "neg"), Filters.lte("time", this.date.toString()), Filters.gte("time", last.toString()));
+		int[] count = new int[month];
 		
 		this.connectDB();
 		
-		return this.getData(bson, this.col);
+		for (int i = 0; i <= month-1; i++) {
+			last = this.date.minus(i+1, ChronoUnit.MONTHS);
+			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "neg"), Filters.eq("time", last.toString()));
+			
+			count[i] = this.getData(bson, this.col);
+		}
+
+		return count;
 	}
-	public int countNegFacilityPerHour() {
+	public int[] countNegFacilityPerHour() {
 		this.date = this.getNow();
-		Instant yesterday = this.getYesterdayDate();
+		Instant last;
 		
-		Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "neg"), Filters.lte("time", this.date.toString()), Filters.gte("time", yesterday.toString()));
+		int[] count = new int[hour];
 		
 		this.connectDB();
 		
-		return this.getData(bson, this.col);
+		for (int i = 0; i <= hour-1; i++) {
+			last = this.date.minus(i+1, ChronoUnit.HOURS);
+			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "neg"), Filters.eq("time", last.toString()));
+			
+			count[i] = this.getData(bson, this.col);
+		}
+
+		return count;
 	}
 	
-	public int countPosFacilityPerDay() {		
+	public int[] countPosFacilityPerDay() {		
 		this.date = this.getNow();
-		Instant last = this.getLastWeekDate();
+		Instant last;
 		
-		Bson bson = Filters.and(Filters.eq("csvc", "dt"), Filters.eq("sentiment", "pos"), Filters.lte("time", this.date.toString()), Filters.gte("time", last.toString()));
+		int[] count = new int[day];
 		
 		this.connectDB();
+		
+		for (int i = 0; i <= day-1; i++) {
+			last = this.date.minus(i+1, ChronoUnit.DAYS);
+			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "pos"), Filters.eq("time", last.toString()));
+			
+			count[i] = this.getData(bson, this.col);
+		}
 
-		return this.getData(bson, this.col);
+		return count;
 	}
-	public int countPosFacilityPerMonth() {
+	public int[] countPosFacilityPerMonth() {
 		this.date = this.getNow();
-		Instant last = this.getLastYearDate();
+		Instant last;
 		
-		Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "pos"), Filters.lte("time", this.date.toString()), Filters.gte("time", last.toString()));
+		int[] count = new int[month];
 		
 		this.connectDB();
 		
-		return this.getData(bson, this.col);
+		for (int i = 0; i <= month-1; i++) {
+			last = this.date.minus(i+1, ChronoUnit.MONTHS);
+			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "pos"), Filters.eq("time", last.toString()));
+			
+			count[i] = this.getData(bson, this.col);
+		}
+
+		return count;
 	}
-	public int countPosFacilityPerHour() {
+	public int[] countPosFacilityPerHour() {
 		this.date = this.getNow();
-		Instant yesterday = this.getYesterdayDate();
+		Instant last;
 		
-		Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "pos"), Filters.lte("time", this.date.toString()), Filters.gte("time", yesterday.toString()));
+		int[] count = new int[hour];
 		
 		this.connectDB();
 		
-		return this.getData(bson, this.col);
+		for (int i = 0; i <= hour-1; i++) {
+			last = this.date.minus(i+1, ChronoUnit.HOURS);
+			Bson bson = Filters.and(Filters.eq("aspect", "csvc"), Filters.eq("sentiment", "pos"), Filters.eq("time", last.toString()));
+			
+			count[i] = this.getData(bson, this.col);
+		}
+
+		return count;
 	}
 }

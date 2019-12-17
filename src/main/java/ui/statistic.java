@@ -42,7 +42,9 @@ public class statistic extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		connectDatabase connectDB = new connectDatabase();
-		int count = connectDB.countNegTrainingPerDay();
+		int[] count = connectDB.countNegTrainingPerDay();
+		
+		System.out.println(count[0]);
 		
 		String filter = request.getParameter("filter");
 
@@ -51,9 +53,9 @@ public class statistic extends HttpServlet {
 		
 		String labels;
 		if(filter == "month") {
-			labels = "labels: ['', '2017', '2018', '2019'],";
+			labels = "labels: ['2016', '2017', '2018', '2019'],";
 		} else if(filter == "day") {
-			
+			connectDB.getNow();
 		} else {
 			
 		}
@@ -66,7 +68,7 @@ public class statistic extends HttpServlet {
 					"<script type=\"text/javascript\">"+
 						"Chart.defaults.global.elements.line.fill = false;"+
 						"var barChartData = {"+
-					  		labels+
+						"labels: ['2016', '2017', '2018', '2019'],"+
 					  		"datasets: [{"+
 						    	"type: 'bar',"+
 							    "label: 'Tiêu cực',"+
