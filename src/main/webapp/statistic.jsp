@@ -39,6 +39,22 @@
       <figure class="highcharts-figure">
         <div id="chart"></div>
       </figure>
+      
+      <%
+      	String label = (String) request.getAttribute("label");
+      
+      	String posTrainingComment = (String) request.getAttribute("posTrainingComment");
+      	String negTrainingComment = (String) request.getAttribute("negTrainingComment");
+      	String posTrainingPost = (String) request.getAttribute("posTrainingPost");
+      	String negTrainingPost = (String) request.getAttribute("negtrainingPost");
+      	String totalTraining = (String) request.getAttribute("totalTraining");
+      	
+      	String posFacilityComment = (String) request.getAttribute("posFacilityComment");
+      	String negFacilityComment = (String) request.getAttribute("negFacilityComment");
+      	String posFacilityPost = (String) request.getAttribute("posFacilityPost");
+      	String negFacilityPost = (String) request.getAttribute("negFacilityPost");
+      	String totalFacility = (String) request.getAttribute("totalFacility");
+      %>
 
       <script type="text/javascript">
         Highcharts.chart('chart', {
@@ -55,7 +71,7 @@
               title: {
                   text: 'ĐÀO TẠO',
               },
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+              categories: <%= label%>,
               reversed: false,
               labels: {
                   step: 1
@@ -69,7 +85,7 @@
               },
               opposite: true,
               reversed: false,
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+              categories: <%= label%>,
               linkedTo: 0,
               labels: {
                   step: 1
@@ -106,27 +122,27 @@
           series: [{
               type: 'column',
               name: 'Bình luận Tích cực',
-              data: [3, 2, 1, 3, 4],
+              data: <%= posFacilityComment%>,
               stack: 1
             }, {
               type: 'column',
               name: 'Bình luận Tiêu cực',
-              data: [3, 2, 1, 3, 4],
+              data: <%= negFacilityComment%>,
               stack: 1
             }, {
               type: 'column',
               name: 'Bài đăng Tích cực',
-              data: [2, 3, 5, 7, 6],
+              data: <%= posFacilityPost%>,
               stack: 1
             }, {
               type: 'column',
               name: 'Bài đăng Tiêu cực',
-              data: [4, 3, 3, 9, 1],
+              data: <%= negFacilityPost%>,
               stack: 1
             }, {
               type: 'spline',
               name: 'Tổng đề cập',
-              data: [12, 10, 10, 22, 14],
+              data: <%= totalFacility%>,
               stack: 1,
               marker: {
                   lineWidth: 2,
@@ -136,27 +152,27 @@
             }, {
               type: 'column',
               name: 'Bình luận Tích cực',
-              data: [-4, -3, -3, -9, -5],
+              data: <%= posTrainingComment%>,
               stack: 1
             }, {
               type: 'column',
               name: 'Bình luận Tiêu cực',
-              data: [-4, -3, -3, -9, -5],
+              data: <%= negTrainingComment%>,
               stack: 1
             }, {
               type: 'column',
               name: 'Bài đăng Tích cực',
-              data: [-2, -3, -5, -7, -6],
+              data: <%= posTrainingPost%>,
               stack: 1
             }, {
               type: 'column',
               name: 'Bài đăng Tiêu cực',
-              data: [-4, -3, -3, -9, 0],
+              data: <%= negTrainingPost%>,
               stack: 1
             }, {
               type: 'spline',
               name: 'Tổng đề cập',
-              data: [-14, -12, -14, -34, -16],
+              data: <%= totalTraining%>,
               stack: 2,
               marker: {
                   lineWidth: 2,
