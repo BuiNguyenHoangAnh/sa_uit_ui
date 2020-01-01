@@ -38,7 +38,8 @@ public class statistic extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
+		this.doPost(request, response);
 	}
 
 	/**
@@ -66,14 +67,11 @@ public class statistic extends HttpServlet {
 		connectDatabase connectDB = new connectDatabase();
 		List<Statistic> list = connectDB.getDataFromDB();
 		
-		System.out.println(list);
-		System.out.println(filter);
-		
 		if (filter.contentEquals("month")) {
 			labels = this.createMonthLabels(getCurrentMonth());
 			for(int i = 0; i <= labels.length-1; i++) {
 				if(i == 0) {
-					label += "['" + labels[i] + "',";
+					label += "['" + labels[i] + "','";
 				} else {
 					if(i == labels.length-1) {
 						label += labels[i] + "']";
@@ -85,51 +83,50 @@ public class statistic extends HttpServlet {
 			
 			for(int i = 0; i <= labels.length-1; i++) {
 				if(i == 0) {
-					posTrainingComment += "[-" + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.posTraining) + ",";
-					negTrainingComment += "[-" + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negTraining) + ",";
-					posTrainingPost += "[-" + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posTraining) + ",";
-					negTrainingPost += "[-" + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negTraining) + ",";
-					totalTraining += "[-" + (this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.posTraining) + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negTraining) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posTraining) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negTraining)) + ",";
+					posTrainingComment += "[-" + this.getDataFromList(list, labels[i], "COMMENT", this.posTraining) + ",";
+					negTrainingComment += "[-" + this.getDataFromList(list, labels[i], "COMMENT", this.negTraining) + ",";
+					posTrainingPost += "[-" + this.getDataFromList(list, labels[i], "POST", this.posTraining) + ",";
+					negTrainingPost += "[-" + this.getDataFromList(list, labels[i], "POST", this.negTraining) + ",";
+					totalTraining += "[-" + (this.getDataFromList(list, labels[i], "COMMENT", this.posTraining) + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negTraining) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posTraining) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negTraining)) + ",";
 					
-					posFacilityComment += "[" + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.posFacility) + ",";
-					negFacilityComment += "[" + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negFacility) + ",";
-					posFacilityPost += "[" + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posFacility) + ",";
-					negFacilityPost += "[" + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negFacility) + ",";
-					totalFacility += "[" + (this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.posFacility) + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negFacility) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posFacility) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negFacility)) + ",";
+					posFacilityComment += "[" + this.getDataFromList(list, labels[i], "COMMENT", this.posFacility) + ",";
+					negFacilityComment += "[" + this.getDataFromList(list, labels[i], "COMMENT", this.negFacility) + ",";
+					posFacilityPost += "[" + this.getDataFromList(list, labels[i], "POST", this.posFacility) + ",";
+					negFacilityPost += "[" + this.getDataFromList(list, labels[i], "POST", this.negFacility) + ",";
+					totalFacility += "[" + (this.getDataFromList(list, labels[i], "COMMENT", this.posFacility) + this.getDataFromList(list, labels[i], "COMMENT", this.negFacility) + this.getDataFromList(list, labels[i], "POST", this.posFacility) + this.getDataFromList(list, labels[i], "POST", this.negFacility)) + ",";
 				} else {
 					if(i == labels.length-1) {
-						posTrainingComment += "-" + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.posTraining) + "]";
-						negTrainingComment += "-" + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negTraining) + "]";
-						posTrainingPost += "-" + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posTraining) + "]";
-						negTrainingPost += "-" + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negTraining) + "]";
-						totalTraining += "-" + (this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.posTraining) + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negTraining) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posTraining) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negTraining)) + "]";
+						posTrainingComment += "-" + this.getDataFromList(list, labels[i], "COMMENT", this.posTraining) + "]";
+						negTrainingComment += "-" + this.getDataFromList(list, labels[i], "COMMENT", this.negTraining) + "]";
+						posTrainingPost += "-" + this.getDataFromList(list, labels[i], "POST", this.posTraining) + "]";
+						negTrainingPost += "-" + this.getDataFromList(list, labels[i], "POST", this.negTraining) + "]";
+						totalTraining += "-" + (this.getDataFromList(list, labels[i], "COMMENT", this.posTraining) + this.getDataFromList(list, labels[i], "COMMENT", this.negTraining) + this.getDataFromList(list, labels[i], "POST", this.posTraining) + this.getDataFromList(list, labels[i], "POST", this.negTraining)) + "]";
 						
-						posFacilityComment += this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.posFacility) + "]";
-						negFacilityComment += this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negFacility) + "]";
-						posFacilityPost += this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posFacility) + "]";
-						negFacilityPost += this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negFacility) + "]";
-						totalFacility += (this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.posFacility) + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negFacility) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posFacility) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negFacility)) + "]";
+						posFacilityComment += this.getDataFromList(list, labels[i], "COMMENT", this.posFacility) + "]";
+						negFacilityComment += this.getDataFromList(list, labels[i], "COMMENT", this.negFacility) + "]";
+						posFacilityPost += this.getDataFromList(list, labels[i], "POST", this.posFacility) + "]";
+						negFacilityPost += this.getDataFromList(list, labels[i], "POST", this.negFacility) + "]";
+						totalFacility += (this.getDataFromList(list, labels[i], "COMMENT", this.posFacility) + this.getDataFromList(list, labels[i], "COMMENT", this.negFacility) + this.getDataFromList(list, labels[i], "POST", this.posFacility) + this.getDataFromList(list, labels[i], "POST", this.negFacility)) + "]";
 					} else {
-						posTrainingComment += "-" + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.posTraining) + ",";
-						negTrainingComment += "-" + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negTraining) + ",";
-						posTrainingPost += "-" + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posTraining) + ",";
-						negTrainingPost += "-" + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negTraining) + ",";
-						totalTraining += "-" + (this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.posTraining) + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negTraining) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posTraining) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negTraining)) + ",";
+						posTrainingComment += "-" + this.getDataFromList(list, labels[i], "COMMENT", this.posTraining) + ",";
+						negTrainingComment += "-" + this.getDataFromList(list, labels[i], "COMMENT", this.negTraining) + ",";
+						posTrainingPost += "-" + this.getDataFromList(list, labels[i], "POST", this.posTraining) + ",";
+						negTrainingPost += "-" + this.getDataFromList(list, labels[i], "POST", this.negTraining) + ",";
+						totalTraining += "-" + (this.getDataFromList(list, labels[i], "COMMENT", this.posTraining) + this.getDataFromList(list, labels[i], "COMMENT", this.negTraining) + this.getDataFromList(list, labels[i], "POST", this.posTraining) + this.getDataFromList(list, labels[i], "POST", this.negTraining)) + ",";
 						
-						posFacilityComment += this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.posFacility) + ",";
-						negFacilityComment += this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negFacility) + ",";
-						posFacilityPost += this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posFacility) + ",";
-						negFacilityPost += this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negFacility) + ",";
-						totalFacility += (this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.posFacility) + this.getDataFromList(list, labels[i].toUpperCase(), "COMMENT", this.negFacility) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.posFacility) + this.getDataFromList(list, labels[i].toUpperCase(), "POST", this.negFacility)) + ",";
+						posFacilityComment += this.getDataFromList(list, labels[i], "COMMENT", this.posFacility) + ",";
+						negFacilityComment += this.getDataFromList(list, labels[i], "COMMENT", this.negFacility) + ",";
+						posFacilityPost += this.getDataFromList(list, labels[i], "POST", this.posFacility) + ",";
+						negFacilityPost += this.getDataFromList(list, labels[i], "POST", this.negFacility) + ",";
+						totalFacility += (this.getDataFromList(list, labels[i], "COMMENT", this.posFacility) + this.getDataFromList(list, labels[i], "COMMENT", this.negFacility) + this.getDataFromList(list, labels[i], "POST", this.posFacility) + this.getDataFromList(list, labels[i], "POST", this.negFacility)) + ",";
 					}
 				}
 			}
-			System.out.println(posFacilityComment);
 		} else {
 			labels = this.createDayLabels(getCurrentDay());
 			for(int i = 0; i <= labels.length-1; i++) {
 				if(i == 0) {
-					label += "['" + labels[i] + "',";
+					label += "['" + labels[i] + "','";
 				} else {
 					if(i == labels.length-1) {
 						label += labels[i] + "']";
@@ -287,7 +284,7 @@ public class statistic extends HttpServlet {
 				          "},"+
 				         " tooltip: {"+
 				              "formatter: function () {"+
-				                  "return '\"<b>\"+' + this.point.category + '\"</b>\"+\"<br/>\"+'+ this.series.name + ': '   +"+
+				                  "return '<b>' + this.point.category + '</b><br/>'+ this.series.name + ': '   +"+
 				                      "Highcharts.numberFormat(Math.abs(this.point.y), 1);"+
 				              "}"+
 				          "},"+
@@ -493,19 +490,17 @@ public class statistic extends HttpServlet {
 	
 	private int getDataFromList(List<Statistic> list, String time, String type, String status) {
 		for(Statistic stat:list) {
-			if(stat.getType().contentEquals(time)) {
-				if(stat.getTypeDetail().contentEquals(time)) {
-					if(stat.getTypeSource().contentEquals(type)) {
-						switch(status) {
-						case "negTraining":
-							return Integer.parseInt(stat.getNegTraining());
-						case "posTraining":
-							return Integer.parseInt(stat.getPosTraining());
-						case "negFacility":
-							return Integer.parseInt(stat.getNegFacility());
-						case "posFacility":
-							return Integer.parseInt(stat.getPosFacility());
-						}
+			if(stat.getTypeDetail().contentEquals(time)) {
+				if(stat.getTypeSource().contentEquals(type)) {
+					switch(status) {
+					case "negTraining":
+						return Integer.parseInt(stat.getNegTraining());
+					case "posTraining":
+						return Integer.parseInt(stat.getPosTraining());
+					case "negFacility":
+						return Integer.parseInt(stat.getNegFacility());
+					case "posFacility":
+						return Integer.parseInt(stat.getPosFacility());
 					}
 				}
 			}

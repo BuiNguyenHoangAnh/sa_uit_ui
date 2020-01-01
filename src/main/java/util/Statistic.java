@@ -24,10 +24,10 @@ public class Statistic implements Serializable {
 	private String type = "";
 	private String typeDetail = ""; // 
 	private String typeSource = ""; //Comment or Post
-	private String posTraining = "5";
-	private String negTraining = "5";
-	private String posFacility = "5";
-	private String negFacility = "5";
+	private String posTraining = "0";
+	private String negTraining = "0";
+	private String posFacility = "0";
+	private String negFacility = "0";
 	
 	public Statistic(String type, String typeDetail, String typeSource, String posTraining, String negTraining,
 			String posFacility, String negFacility) {
