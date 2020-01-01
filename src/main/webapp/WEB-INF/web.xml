@@ -19,6 +19,7 @@
     <display-name>statistic</display-name>
     <servlet-name>statistic</servlet-name>
     <servlet-class>ui.statistic</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>statistic</servlet-name>
