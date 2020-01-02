@@ -59,21 +59,23 @@ public class sample extends HttpServlet {
 		
 //		RequestDispatcher req = request.getRequestDispatcher("sample.jsp");
 //		req.include(request, response);
-			
-		String temp = null;
 		
-		temp = standardizer.standardizeData(this.spark, inputText);
+		String standardizeResult = "";
+		String tokenizerResult = "";
+		String removeStopWordsResult = "";
 		
-		temp = wordSegmentation.wordSegmentation(this.spark, temp);
+		standardizeResult = standardizer.standardizeData(this.spark, inputText);
+		
+		tokenizerResult = wordSegmentation.wordSegmentation(this.spark, standardizeResult);
 		
 		try {
-			  temp = removeStopWords.correctString(this.spark, temp); 
+			  removeStopWordsResult = removeStopWords.correctString(this.spark, tokenizerResult); 
 		} catch (IOException e) { 
 			e.printStackTrace();
 		}
 		
 		model = new sentimentAnalyser();
-		double[] result = model.testSample(temp);
+		double[] result = model.testSample(removeStopWordsResult);
 		
 		out.println(
 				"<!DOCTYPE html>"+
@@ -104,6 +106,9 @@ public class sample extends HttpServlet {
 					"<a href=\"sample.jsp\"><-- Nhập lại</a>"+
 				"</div>"+
 					"<h1 class=\"content\" style=\"text-align: center;\">KẾT QUẢ PHÂN TÍCH</h1>"+
+					"<div class=\"content\">Chuẩn hóa dữ liệu: "+ standardizeResult +"</div>"+
+					"<div class=\"content\">Tách từ: "+ tokenizerResult +"</div>"+
+					"<div class=\"content\">Loại bỏ hư từ: "+ removeStopWordsResult +"</div>"+
 					"<div class=\"content\">"+
 						"<h4>Khía cạnh</h4>"+
 						"<canvas  id=\"aspect\" class=\"chart\"></canvas >"+
