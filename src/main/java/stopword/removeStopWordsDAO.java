@@ -16,7 +16,7 @@ public class removeStopWordsDAO {
 	 * get stop words dictionary
 	 */
 	public JavaRDD<String> dictionaryFile(sparkConfigure spark) {
-		this.stopWordsDictionaryFileName = "file:///home/buinguyenhoanganh/Desktop/sa_uit/resource/stopword_dictionary.txt";
+		this.stopWordsDictionaryFileName = "file:///home/buinguyenhoanganh/Desktop/sa_uit_ui/resource/stopword_dictionary.txt";
 
 		if (this.stopWordsDictionaryFileName != "" || this.stopWordsDictionaryFileName != null) {
 			JavaRDD<String> dictionaryFile = spark.getSparkContext().textFile(this.stopWordsDictionaryFileName);

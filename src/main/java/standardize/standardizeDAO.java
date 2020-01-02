@@ -43,7 +43,7 @@ public class standardizeDAO {
 	 * read Social Language Dictionary
 	 */
 	public static DataFrame readSocialDictionary(sparkConfigure spark) {
-		socialLanguageDictionaryName = "file:///home/buinguyenhoanganh/Desktop/sa_uit/resource/SocialLanguageDictionary.json";
+		socialLanguageDictionaryName = "file:///home/buinguyenhoanganh/Desktop/sa_uit_ui/resource/SocialLanguageDictionary.json";
 		
 		SQLContext sqlContext = new SQLContext(spark.getSparkContext());
 		

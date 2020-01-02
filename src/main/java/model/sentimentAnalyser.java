@@ -40,19 +40,19 @@ public class sentimentAnalyser {
 	 * // // Declare variables //
 	 */
 	// Location to save and extract the training/testing data
-    public static final String DATA_PATH = "/home/buinguyenhoanganh/Desktop/sa_uit/data/csvc/"; // need to replace this path. Ex: /path/to/data/train/
+    public static final String DATA_PATH = "/home/buinguyenhoanganh/Desktop/sa_uit_ui/data/csvc/"; // need to replace this path. Ex: /path/to/data/train/
     // Location for the model word2vector
-    public static final String WORD_VECTORS_PATH = "/home/buinguyenhoanganh/Desktop/sa_uit/word2vecModel/vector.txt"; //need to replace this path. Ex: /path/to/data/w2v.bin
+    public static final String WORD_VECTORS_PATH = "/home/buinguyenhoanganh/Desktop/sa_uit_ui/word2vecModel/vector.txt"; //need to replace this path. Ex: /path/to/data/w2v.bin
     // Directory save checkpoint MultiLayerNetwork. 
-    public static final String CHECKPOINT_PATH = "/home/buinguyenhoanganh/Desktop/sa_uit/checkpoint/"; // ex: /path/to/checkpoint/<name>
+    public static final String CHECKPOINT_PATH = "/home/buinguyenhoanganh/Desktop/sa_uit_ui/checkpoint/"; // ex: /path/to/checkpoint/<name>
     //
-    public static final String VALIDATE_PATH = "/home/buinguyenhoanganh/Desktop/sa_uit/data/validate/file";
+    public static final String VALIDATE_PATH = "/home/buinguyenhoanganh/Desktop/sa_uit_ui/data/validate/file";
     //
-    public static final String MODEL_PATH_SENTIMENT_FACILITY = "/home/buinguyenhoanganh/Desktop/sa_uit/model/model-sentiment-csvc.zip";
+    public static final String MODEL_PATH_SENTIMENT_FACILITY = "/home/buinguyenhoanganh/Desktop/sa_uit_ui/model/model-sentiment-csvc.zip";
     //
-    public static final String MODEL_PATH_SENTIMENT_TRAINING = "/home/buinguyenhoanganh/Desktop/sa_uit/model/model-sentiment-dt.zip";
+    public static final String MODEL_PATH_SENTIMENT_TRAINING = "/home/buinguyenhoanganh/Desktop/sa_uit_ui/model/model-sentiment-dt.zip";
     //
-    public static final String MODEL_PATH_ASPECT = "/home/buinguyenhoanganh/Desktop/sa_uit/model/model-aspect.zip";
+    public static final String MODEL_PATH_ASPECT = "/home/buinguyenhoanganh/Desktop/sa_uit_ui/model/model-aspect.zip";
     //
     //public static final String MODEL_PATH = "/home/tranhamduong/project-sa-uit/workspace/project/model/model-aspect.zip";
 

@@ -66,7 +66,7 @@ public class sample extends HttpServlet {
 		
 		standardizeResult = standardizer.standardizeData(this.spark, inputText);
 		
-		tokenizerResult = wordSegmentation.wordSegmentation(this.spark, standardizeResult);
+		tokenizerResult = wordSegmentation.wordSegmentation(this.spark, standardizeResult).substring(5);
 		
 		try {
 			  removeStopWordsResult = removeStopWords.correctString(this.spark, tokenizerResult); 
@@ -76,7 +76,7 @@ public class sample extends HttpServlet {
 		
 		model = new sentimentAnalyser();
 		double[] result = model.testSample(removeStopWordsResult);
-		
+
 		out.println(
 				"<!DOCTYPE html>"+
 				"<html>"+
@@ -106,9 +106,9 @@ public class sample extends HttpServlet {
 					"<a href=\"sample.jsp\"><-- Nhập lại</a>"+
 				"</div>"+
 					"<h1 class=\"content\" style=\"text-align: center;\">KẾT QUẢ PHÂN TÍCH</h1>"+
-					"<div class=\"content\">Chuẩn hóa dữ liệu: "+ standardizeResult +"</div>"+
-					"<div class=\"content\">Tách từ: "+ tokenizerResult +"</div>"+
-					"<div class=\"content\">Loại bỏ hư từ: "+ removeStopWordsResult +"</div>"+
+					"<div class=\"content\" style=\"margin-top: 16px; margin-bottom: 16px;\">Chuẩn hóa dữ liệu: "+ standardizeResult +"</div>"+
+					"<div class=\"content\" style=\"margin-top: 16px; margin-bottom: 16px;\">Tách từ: "+ tokenizerResult +"</div>"+
+					"<div class=\"content\" style=\"margin-top: 16px; margin-bottom: 16px;\">Loại bỏ hư từ: "+ removeStopWordsResult +"</div>"+
 					"<div class=\"content\">"+
 						"<h4>Khía cạnh</h4>"+
 						"<canvas  id=\"aspect\" class=\"chart\"></canvas >"+
