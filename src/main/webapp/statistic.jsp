@@ -115,7 +115,7 @@
     		    responsive: true,
     		    title: {
     		      display: true,
-    		      text: 'Chart.js Stacked Bar and Unstacked Line Combo Chart'
+    		      text: 'Biểu đồ thống kê cảm xúc'
     		    },
     		    legend: {
     		      labels: {
