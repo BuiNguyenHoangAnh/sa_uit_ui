@@ -11,7 +11,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.0/Chart.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -55,204 +55,131 @@
       %>
 
       <script type="text/javascript">
-      Chart.defaults.groupableBar = Chart.helpers.clone(Chart.defaults.bar);
-		Chart.defaults.global.elements.line.fill = false;
+      window.chartColors = {
+    		  red: 'rgb(255, 99, 132)',
+    		  orange: 'rgb(255, 159, 64)',
+    		  yellow: 'rgb(255, 205, 86)',
+    		  green: 'rgb(75, 192, 192)',
+    		  blue: 'rgb(54, 162, 235)',
+    		  purple: 'rgb(153, 102, 255)',
+    		  grey: 'rgb(231,233,237)'
+    		};
 
-		var helpers = Chart.helpers;
-		Chart.controllers.groupableBar = Chart.controllers.bar.extend({
-		  calculateBarX: function (index, datasetIndex) {
-		    // position the bars based on the stack index
-		    var stackIndex = this.getMeta().stackIndex;
-		    return Chart.controllers.bar.prototype.calculateBarX.apply(this, [index, stackIndex]);
-		  },
+    		var ctx = document.getElementById("chart").getContext("2d");
 
-		  hideOtherStacks: function (datasetIndex) {
-		    var meta = this.getMeta();
-		    var stackIndex = meta.stackIndex;
+    		var myChart = new Chart(ctx, {
+    		  type: 'bar',
+    		  data: {
+    		    labels: <%= label%>,
+    		    datasets: [{
+    		      type: 'line',
+    		      label: 'Lương đề cập Đào tạo',
+    		      borderColor: "rgba(151,255,0,1)",
+    		      borderWidth: 2,
+    		      fill: false,
+    		      data: <%= totalTraining %>,
+    		    }, {
+    		      type: 'line',
+    		      label: 'Lượng đề cập Cơ sở vật chất',
+    		      borderColor: "rgba(151,187,205,1)",
+    		      borderWidth: 2,
+    		      fill: false,
+    		      data: <%= totalFacility %>,
+    		    }, {
+    		      type: 'bar',
+    		      label: 'Tích cực',
+    		      backgroundColor: "rgba(99,255,132,0.5)",
+    		      stack: 'Stack 0',
+    		      data: <%= posTraining %>,
+    		    }, {
+    		      type: 'bar',
+    		      label: 'Tiêu cực',
+    		      backgroundColor: "rgba(255,99,132,0.5)",
+    		      stack: 'Stack 0',
+    		      data: <%= negTraining %>,
+    		    }, {
+    		      type: 'bar',
+    		      label: 'Tích cực',
+    		      backgroundColor: "rgba(99,255,132,0.5)",
+    		      stack: 'Stack 1',
+    		      data: <%= posFacility %>,
+    		    }, {
+    		      type: 'bar',
+    		      label: 'Tiêu cực',
+    		      backgroundColor: "rgba(255,99,132,0.5)",
+    		      stack: 'Stack 1',
+    		      data: <%= negFacility %>,
+    		    }]
+    		  },
+    		  options: {
+    		    responsive: true,
+    		    title: {
+    		      display: true,
+    		      text: 'Chart.js Stacked Bar and Unstacked Line Combo Chart'
+    		    },
+    		    legend: {
+    		      labels: {
+    		        generateLabels: function(chart) {
+    		          return Chart.defaults.global.legend.labels.generateLabels.apply(this, [chart]).filter(function(item, i){
+    		          		return i <= 3;
+    		          });
+    		        }
+    		      }
+    		    },
+    		    tooltips: {
+    		    	mode: 'single',
+    		    	enabled: true,
+    		    	callbacks: {
+    		    		label: function(tooltipItems, data) {
+    		    			var comment = 0;
+    						var post = 0;
+    						
+    						var posTrainingComment = <%= posTrainingComment %>;
+    						var posTrainingPost = <%= posTrainingPost %>;
+    						var negTrainingComment = <%= negTrainingComment %>;
+    						var negTrainingPost = <%= negTrainingPost %>;
+    						
+    						var posFacilityComment = <%= posFacilityComment %>;
+    						var posFacilityPost = <%= posFacilityPost %>;
+    						var negFacilityComment = <%= negFacilityComment %>;
+    						var negFacilityPost = <%= negFacilityPost %>;
 
-		    this.hiddens = [];
-		    for (var i = 0; i < datasetIndex; i++) {
-		      var dsMeta = this.chart.getDatasetMeta(i);
-		      if (dsMeta.stackIndex !== stackIndex) {
-		        this.hiddens.push(dsMeta.hidden);
-		        dsMeta.hidden = true;
-		      }
-		    }
-		  },
-
-		  unhideOtherStacks: function (datasetIndex) {
-		    var meta = this.getMeta();
-		    var stackIndex = meta.stackIndex;
-
-		    for (var i = 0; i < datasetIndex; i++) {
-		      var dsMeta = this.chart.getDatasetMeta(i);
-		      if (dsMeta.stackIndex !== stackIndex) {
-		        dsMeta.hidden = this.hiddens.unshift();
-		      }
-		    }
-		  },
-
-		  calculateBarY: function (index, datasetIndex) {
-		    this.hideOtherStacks(datasetIndex);
-		    var barY = Chart.controllers.bar.prototype.calculateBarY.apply(this, [index, datasetIndex]);
-		    this.unhideOtherStacks(datasetIndex);
-		    return barY;
-		  },
-
-		  calculateBarBase: function (datasetIndex, index) {
-		    this.hideOtherStacks(datasetIndex);
-		    var barBase = Chart.controllers.bar.prototype.calculateBarBase.apply(this, [datasetIndex, index]);
-		    this.unhideOtherStacks(datasetIndex);
-		    return barBase;
-		  },
-
-		  getBarCount: function () {
-		    var stacks = [];
-
-		    // put the stack index in the dataset meta
-		    Chart.helpers.each(this.chart.data.datasets, function (dataset, datasetIndex) {
-		      var meta = this.chart.getDatasetMeta(datasetIndex);
-		      if (meta.bar && this.chart.isDatasetVisible(datasetIndex)) {
-		        var stackIndex = stacks.indexOf(dataset.stack);
-		        if (stackIndex === -1) {
-		          stackIndex = stacks.length;
-		          stacks.push(dataset.stack);
-		        }
-		        meta.stackIndex = stackIndex;
-		      }
-		    }, this);
-
-		    this.getMeta().stacks = stacks;
-		    return stacks.length;
-		  },
-		});
-
-		var data = {
-		  labels: <%= label%>,
-		  datasets: [
-		    {
-		      label: "Tích cực",
-		      backgroundColor: "rgba(99,255,132,0.5)",
-		      data: <%= posTraining %>,
-		      stack: 1
-		    },
-		    {
-		      label: "Tiêu cực",
-		      backgroundColor: "rgba(255,99,132,0.5)",
-		      data: <%= negTraining %>,
-		      stack: 1
-		    },
-		    {
-		      type: 'line',
-		      label: 'Lượng đề cập Đào tạo',
-		      stack: 3,
-		      backgroundColor: "rgba(151,255,0,1)",
-		      data: <%= totalTraining %>
-			},
-			{
-		      type: 'line',
-		      label: 'Lượng đề cập Cơ sở vật chất',
-		      stack: 4,
-		      backgroundColor: "rgba(151,187,205,1)",
-		      data: <%= totalFacility %>
-			},
-		    {
-		      label: "Tích cực",
-		      backgroundColor: "rgba(99,255,132,0.5)",
-		      data: <%= posFacility %>,
-		      stack: 2
-		    },
-		    {
-		      label: "Tiêu cực",
-		      backgroundColor: "rgba(255,99,132,0.5)",
-		      data: <%= negFacility %>,
-		      stack: 2
-		    }
-		  ]
-		};
-
-		var ctx = document.getElementById("chart").getContext("2d");
-		new Chart(ctx, {
-		  type: 'groupableBar',
-		  data: data,
-		  options: {
-		    legend: {
-		      labels: {
-		        generateLabels: function(chart) {
-		          return Chart.defaults.global.legend.labels.generateLabels.apply(this, [chart]).filter(function(item, i){
-		          		return i <= 3;
-		          });
-		        }
-		      }
-		    },
-		    scales: {
-		      yAxes: [{
-		        stacked: true,
-		      }]
-		    },
-		    tooltips: {
-		    	mode: 'single',
-		    	enabled: true,
-		    	callbacks: {
-		    		label: function(tooltipItems, data) {
-		    			var comment = 0;
-	    				var post = 0;
-	    				
-	    				var posTrainingComment = <%= posTrainingComment %>;
-	    				var posTrainingPost = <%= posTrainingPost %>;
-	    				var negTrainingComment = <%= negTrainingComment %>;
-	    				var negTrainingPost = <%= negTrainingPost %>;
-	    				
-	    				var posFacilityComment = <%= posFacilityComment %>;
-	    				var posFacilityPost = <%= posFacilityPost %>;
-	    				var negFacilityComment = <%= negFacilityComment %>;
-	    				var negFacilityPost = <%= negFacilityPost %>;
-		    			if(data.datasets[tooltipItems.datasetIndex].stack == 1) {
-		    				switch (tooltipItems.datasetIndex) {
-		    				case 0: // dao tao tich cuc 
-		    					comment = posTrainingComment[tooltipItems.index];
-		    					post = posTrainingPost[tooltipItems.index];
-		    					break;
-		    				case 1: // dao tao tieu cuc 
-		    					comment = negTrainingComment[tooltipItems.index];
-		    					post = negTrainingPost[tooltipItems.index];
-		    					break;
-		    				}
-		    				return 'Đào tạo:  ' +tooltipItems.xLabel + ': ' + tooltipItems.yLabel + '  Bình luận: '+ comment + '  Bài đăng: ' + post;
-		    			} else {
-		    				if(data.datasets[tooltipItems.datasetIndex].stack == 2) {
-		    					switch (tooltipItems.datasetIndex) {
-			    				case 4: // csvc tich cuc 
-			    					comment = posFacilityComment[tooltipItems.index];
-			    					post = posFacilityPost[tooltipItems.index];
-			    					break;
-			    				case 5: // csvc tieu cuc 
-			    					comment = negFacilityComment[tooltipItems.index];
-			    					post = negFacilityPost[tooltipItems.index];
-			    					break;
-			    				}
-				    			return 'Cơ sở vật chất:  ' + tooltipItems.xLabel + ': ' + tooltipItems.yLabel + '  Bình luận: '+ comment + '  Bài đăng: ' + post;
-		    				} else {
-		    					if(data.datasets[tooltipItems.datasetIndex].stack == 3) {
-		    						return 'Đào tạo: ' +tooltipItems.xLabel + ': ' + tooltipItems.yLabel;
-		    					} else {
-		    						return 'Cơ sở vật chất: ' +tooltipItems.xLabel + ': ' + tooltipItems.yLabel;
-		    					}
-		    				}
-		    			}
-		    		}
-		    	}
-		    },
-		    title: {
-		    	display: true,
-		    	text: 'Biểu đồ thống kê cảm xúc'
-		    },
-		    subtitle: {
-		    	display: true,
-		    	text: 'Biểu đồ thống kê số lượng Bài đăng/Bình luận Tích cực và Tiêu cực dựa trên các khía cạnh Đào tạo và Cơ sở vật chất'
-		    }
-		  }
-		});
+    		    			switch(data.datasets[tooltipItems.datasetIndex].label) {
+    		    				case 'Lượng đề cập Đào tạo': return 'Đào tạo: ' +tooltipItems.xLabel + ': ' + tooltipItems.yLabel;
+    		    				case 'Lượng đề cập Cơ sở vật chất': return 'Cơ sở vật chất: ' +tooltipItems.xLabel + ': ' + tooltipItems.yLabel;
+    		    				case 'Tích cực':
+    		    					// dao tao tich cuc 
+    		    					if(data.datasets[tooltipItems.datasetIndex].stack == 'Stack 0') {
+    		    						comment = posTrainingComment[tooltipItems.index];
+    			    					post = posTrainingPost[tooltipItems.index];
+    			    					return 'Đào tạo:  ' +tooltipItems.xLabel + ': ' + tooltipItems.yLabel + '  Bình luận: '+ comment + '  Bài đăng: ' + post;
+    		    					} else { // csvc tich cuc
+    		    						comment = posFacilityComment[tooltipItems.index];
+    			    					post = posFacilityPost[tooltipItems.index];
+    			    					return 'Cơ sở vật chất:  ' + tooltipItems.xLabel + ': ' + tooltipItems.yLabel + '  Bình luận: '+ comment + '  Bài đăng: ' + post;
+    		    					}
+    		    				case 'Tiêu cực':
+    		    					// dao tao tieu cuc 
+    		    					if(data.datasets[tooltipItems.datasetIndex].stack == 'Stack 0') {
+    		    						comment = negTrainingComment[tooltipItems.index];
+    			    					post = negTrainingPost[tooltipItems.index];
+    		    						return 'Đào tạo:  ' +tooltipItems.xLabel + ': ' + tooltipItems.yLabel + '  Bình luận: '+ comment + '  Bài đăng: ' + post;
+    		    					} else { // csvc tieu cuc
+    		    						comment = negFacilityComment[tooltipItems.index];
+    			    					post = negFacilityPost[tooltipItems.index];
+    		    						return 'Cơ sở vật chất:  ' + tooltipItems.xLabel + ': ' + tooltipItems.yLabel + '  Bình luận: '+ comment + '  Bài đăng: ' + post;
+    		    					}
+    		    			}
+    		    		}
+    		    	}
+    		    },
+    		    scales: {
+    		      xAxes: [{
+    		        stacked: true,
+    		      }]
+    		    }
+    		  }
+    		});
       </script>
     </div>
     
